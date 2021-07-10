@@ -1,0 +1,37 @@
+[
+	{
+		"plateform": "mySql db",
+		"use": "database_connexion",
+		"user": "backend server (Django)",
+		"user_id": "django_nlp",
+		"password": "nlp_cov_Django_123"
+	},
+	{
+		"plateform": "mySql db",
+		"use": "database_connexion",
+		"user": "realtime scraper",
+		"user_id": "scraper_nlp",
+		"password": "nlp_cov_Scraper_123"
+	},
+	{
+		"plateform": "mySql db",
+		"use": "database_connexion",
+		"user": "realtime parser",
+		"user_id": "parser_nlp",
+		"password": "nlp_cov_Parser_123"
+	},
+	{
+		"plateform": "facebook",
+		"use": "facebook connexion for scraper",
+		"user": "realtime scraper",
+		"user_id": "mahdouikenza@gmail.com",
+		"password": "nlp_kenza_Angle_123"
+	},
+	{
+		"plateform": "gmail",
+		"use": "gmail connexion for facebook user",
+		"user": "realtime scraper",
+		"user_id": "mahdouikenza@gmail.com",
+		"password": "nlp_kenza_Angle_123"
+	}
+]

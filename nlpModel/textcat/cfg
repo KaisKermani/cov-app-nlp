@@ -1,0 +1,9 @@
+{
+  "labels":[
+    "dispo",
+    "cherche",
+    "trash"
+  ],
+  "threshold":0.5,
+  "positive_label":null
+}
