@@ -1,9 +1,7 @@
-from pydantic import ValidationError
-
-from entities.Raw import Raw
-from repositories.PostRespository import PostRepository
-from repositories.RawRepository import RawRepository
-from responses import Responder
+from chalicelib.entities.Raw import Raw
+from chalicelib.repositories.PostRespository import PostRepository
+from chalicelib.repositories.RawRepository import RawRepository
+from chalicelib.responses import Responder
 
 
 class PostHandler:

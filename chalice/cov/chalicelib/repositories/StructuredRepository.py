@@ -1,7 +1,7 @@
 from typing import List
 
-from daos.StructuredDao import StructuredDao
-from entities.Structured import Structured
+from chalicelib.daos.StructuredDao import StructuredDao
+from chalicelib.entities.Structured import Structured
 
 
 class StructuredRepository:

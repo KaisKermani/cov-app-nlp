@@ -2,7 +2,7 @@ import json
 
 from chalice import Response
 
-from utils.CustomJsonEncoder import CustomJsonEncoder
+from chalicelib.utils.CustomJsonEncoder import CustomJsonEncoder
 
 
 class Responder(object):

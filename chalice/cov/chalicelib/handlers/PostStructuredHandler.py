@@ -1,8 +1,8 @@
 from pydantic import ValidationError
 
-from entities.Structured import Structured
-from repositories.StructuredRepository import StructuredRepository
-from responses import Responder
+from chalicelib.entities.Structured import Structured
+from chalicelib.repositories.StructuredRepository import StructuredRepository
+from chalicelib.responses import Responder
 
 
 class PostStructuredHandler:

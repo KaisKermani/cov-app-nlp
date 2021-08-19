@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 
-from entities.Raw import Raw
-from entities.Structured import Structured
+from chalicelib.entities.Raw import Raw
+from chalicelib.entities.Structured import Structured
 
 
 class Post(BaseModel):

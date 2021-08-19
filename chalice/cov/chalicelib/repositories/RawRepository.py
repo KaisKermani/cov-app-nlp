@@ -1,8 +1,8 @@
 from datetime import datetime
 from typing import List
 
-from daos.RawDao import RawDao
-from entities.Raw import Raw
+from chalicelib.daos.RawDao import RawDao
+from chalicelib.entities.Raw import Raw
 
 
 class RawRepository:

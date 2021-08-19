@@ -1,7 +1,7 @@
-from daos.PostDao import PostDao
-from entities.Post import Post
-from entities.Raw import Raw
-from entities.Structured import Structured
+from chalicelib.daos.PostDao import PostDao
+from chalicelib.entities.Post import Post
+from chalicelib.entities.Raw import Raw
+from chalicelib.entities.Structured import Structured
 
 
 class PostRepository:

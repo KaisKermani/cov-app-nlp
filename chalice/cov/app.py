@@ -4,16 +4,16 @@ import os
 import boto3
 from chalice import Chalice, CORSConfig, IAMAuthorizer, BadRequestError
 
-from daos.PostDao import PostDao
-from daos.RawDao import RawDao
-from daos.StructuredDao import StructuredDao
-from handlers.PostHandler import PostHandler
-from handlers.PostRawHandler import PostRawHandler
-from handlers.PostStructuredHandler import PostStructuredHandler
-from repositories.PostRespository import PostRepository
-from repositories.RawRepository import RawRepository
-from repositories.StructuredRepository import StructuredRepository
-from responses import Responder
+from chalicelib.daos.PostDao import PostDao
+from chalicelib.daos.RawDao import RawDao
+from chalicelib.daos.StructuredDao import StructuredDao
+from chalicelib.handlers.PostHandler import PostHandler
+from chalicelib.handlers.PostRawHandler import PostRawHandler
+from chalicelib.handlers.PostStructuredHandler import PostStructuredHandler
+from chalicelib.repositories.PostRespository import PostRepository
+from chalicelib.repositories.RawRepository import RawRepository
+from chalicelib.repositories.StructuredRepository import StructuredRepository
+from chalicelib.responses import Responder
 
 app = Chalice(app_name='cov')
 
