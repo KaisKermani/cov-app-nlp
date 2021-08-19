@@ -259,3 +259,8 @@ while True:
 		time.sleep(random.random()*10+3)
 
 	time.sleep(random.random()*sleep_duration + sleep_duration)
+
+if __name__ == '__main__':
+    main()
+
+def main():

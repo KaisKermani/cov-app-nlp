@@ -22,7 +22,6 @@ from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('', RedirectView.as_view(url='/api/meta/')),
-    path('api/test/', TestList.as_view(), name='test'),
     path('api/meta/', RawPostList.as_view(), name='meta'),
     path('api/meta/<str:pk>/', RawPostRet.as_view(), name='meta'),
     path('api/structured/', StructuredPostList.as_view(), name='structured'),
