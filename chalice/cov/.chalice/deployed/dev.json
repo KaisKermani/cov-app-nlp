@@ -1,10 +1,10 @@
 {
   "resources": [
     {
-      "name": "default-role",
+      "name": "api_handler_role",
       "resource_type": "iam_role",
-      "role_arn": "arn:aws:iam::488738133346:role/cov-dev",
-      "role_name": "cov-dev"
+      "role_arn": "arn:aws:iam::488738133346:role/cov-dev-api_handler",
+      "role_name": "cov-dev-api_handler"
     },
     {
       "name": "api_handler",

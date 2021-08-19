@@ -4,6 +4,7 @@
   "stages": {
     "dev": {
       "api_gateway_stage": "api",
+      "autogen_policy": false,
       "environment_variables":{
         "FRONT_URL": "",
         "TABLE_NAME": "cov_posts"
