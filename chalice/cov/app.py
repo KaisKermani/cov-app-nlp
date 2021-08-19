@@ -4,10 +4,13 @@ import os
 import boto3
 from chalice import Chalice, CORSConfig, IAMAuthorizer, BadRequestError
 
+from daos.PostDao import PostDao
 from daos.RawDao import RawDao
 from daos.StructuredDao import StructuredDao
+from handlers.PostHandler import PostHandler
 from handlers.PostRawHandler import PostRawHandler
 from handlers.PostStructuredHandler import PostStructuredHandler
+from repositories.PostRespository import PostRepository
 from repositories.RawRepository import RawRepository
 from repositories.StructuredRepository import StructuredRepository
 from responses import Responder
@@ -76,7 +79,11 @@ def get_post_structured(post_id):
 
 @app.route('/post/{post_id}', methods=['GET'], cors=cors_config, authorizer=iam_authorizer)
 def get_post(post_id):
-    pass
+    post_dao = PostDao(dynamo_resource, dynamo_table_name)
+    post_repo = PostRepository(post_dao)
+    post_handler = PostHandler(post_repo)
+
+    return post_handler.get_post(post_id)
 
 
 @app.route('/raw', methods=['POST'], cors=cors_config, authorizer=iam_authorizer)
