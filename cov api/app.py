@@ -7,7 +7,7 @@ from chalice import Chalice, CORSConfig, IAMAuthorizer, BadRequestError
 from chalicelib.factories.HandlerFactory import HandlerFactory, HandlerType
 from chalicelib.responses import Responder
 
-app = Chalice(app_name='cov')
+app = Chalice(app_name='cov api')
 
 cors_config = CORSConfig(
     allow_origin=os.environ['FRONT_URL'],
