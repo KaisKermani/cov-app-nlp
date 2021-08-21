@@ -23,8 +23,10 @@ class ScrapingError(Exception):
 class FacebookScraper:
     max_posts_per_group = 20
 
-    def __init__(self, email: str, password: str):
-        self.browser = webdriver.Firefox()
+    def __init__(self, email: str, password: str, geckodriver_path: str):
+        self.browser = webdriver.Firefox(
+            executable_path=geckodriver_path
+        )
         self.email = email
         self.password = password
 
@@ -63,12 +65,11 @@ class FacebookScraper:
             last = self.find_last_article()
 
     def scrape_group(self, group_info):
-        group = group_info[2]
         posts = []
         post = {}
 
-        self.browser.get("https://mobile.facebook.com/groups/" + group)
-        WebDriverWait(self.browser, 5).until(ec.presence_of_element_located(
+        self.browser.get("https://mobile.facebook.com/groups/" + group_info)
+        WebDriverWait(self.browser, 10).until(ec.presence_of_element_located(
             (By.XPATH, '/html/body/div[1]/div/div[4]/div/div[1]/div/div/section/article[1]')
         ))
 
@@ -77,21 +78,17 @@ class FacebookScraper:
             if (i - 1) % 20 == 0:
                 self.scroll_till(i)
 
-            post["text"] = self.find_post_text()
 
             try:
-                post['Post_time'] = self.browser.find_element_by_xpath(
-                    '/html/body/div[1]/div/div[4]/div/div[1]/div/div' + '/div' * int((i - 1) / 20) +
-                    '/section/article[' + str(
-                        (i - 1) % 20 + 1) + ']/div/header/div/div[2]/div/div/div/div[1]/div/a/abbr'
-                ).text
+                post["text"] = self.find_post_text(i)
+                post['Post_time'] = self.find_post_time(i)
                 post['Extract_time'] = time.ctime(time.time())
 
-                post['Author'], post['Author_profile'] = self.find_author_data()
+                post['Author'], post['Author_profile'] = self.find_author_data(i)
 
-                post['Post_link'] = self.find_post_link()
+                post['Post_link'] = self.find_post_link(i)
 
-            except NoSuchElementException:
+            except ScrapingError:
                 logger.error('POST #' + str(i) + ' PROBLEMATIC')
                 continue
 
@@ -100,20 +97,18 @@ class FacebookScraper:
             post['id'] = hashlib.md5((post['text'] + post['Post_link']).encode()).hexdigest()
             post['Extract_time'] = fb_formatter.format_extract_time(post['Extract_time'])
             post['Post_time'] = fb_formatter.format_post_time(post['Post_time'], post['Extract_time'])
-            if post['id'] == last_posts[group]:
-                return
+            logger.info("Check if post is already scraped")
 
             posts.append(dict(post))
 
         try:
-            last_posts[group] = posts[0]['id']
-            logger.info(group, 'extracted:', len(posts))
+            logger.info("Update last group")
         except IndexError:
             return
 
         return posts
 
-    def find_post_text(self):
+    def find_post_text(self, i: int):
         try:
             return self.browser.find_element_by_xpath(
                 '/html/body/div[1]/div/div[4]/div/div[1]/div/div' + '/div' * int((i - 1) / 20) +
@@ -143,9 +138,9 @@ class FacebookScraper:
 
                     except NoSuchElementException:
                         logger.info('POST #' + str(i) + ' NOT VALID')
-                        return
+                        raise ScrapingError(f"Post {i} NOT VALID")
 
-    def find_post_link(self):
+    def find_post_link(self, i:int):
 
         try:
             return self.browser.find_element_by_xpath(
@@ -166,7 +161,7 @@ class FacebookScraper:
         except NoSuchElementException:
             raise ScrapingError("Can't find post link")
 
-    def find_author_data(self):
+    def find_author_data(self, i: int):
 
         try:
             el = self.browser.find_element_by_xpath(
@@ -192,3 +187,14 @@ class FacebookScraper:
         except NoSuchElementException:
             logger.error("Could not find author data")
             raise ScrapingError("Couldn't find author data")
+
+    def find_post_time(self, i:int):
+        try:
+            return self.browser.find_element_by_xpath(
+            '/html/body/div[1]/div/div[4]/div/div[1]/div/div' + '/div' * int((i - 1) / 20) +
+            '/section/article[' + str(
+                (i - 1) % 20 + 1) + ']/div/header/div/div[2]/div/div/div/div[1]/div/a/abbr'
+            ).text
+        except NoSuchElementException:
+            logger.error("Couldn't find post time")
+            raise ScrapingError("Couldn't find post time")

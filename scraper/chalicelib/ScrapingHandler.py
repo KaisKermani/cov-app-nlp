@@ -19,7 +19,12 @@ class ScrapingHandler:
         # Get facebook groups
         fb_groups = self.api_service.get_facebook_groups()
 
-        for group_info in fb_groups:
-            self.fb_scraper.scrape_group(group_info)
+        res = []
 
+        for group_info in fb_groups:
+            posts = self.fb_scraper.scrape_group(group_info)
+            res.append(posts)
+            print(f"Found {len(posts)} posts: {posts} in group {group_info}")
+
+        return f"Found {len(res)} posts"
 
